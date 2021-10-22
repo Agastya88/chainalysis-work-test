@@ -6,6 +6,7 @@ function App() {
     const exchanges = ["Coinbase", "Blockchain.com"]
     const [bitcoinPrices, setBitcoinPrices] = useState([[1,2], [3,4]])
     const [ethereumPrices, setEthereumPrices] = useState([[5,6], [7,8]])
+    const [refresh, setRefresh] = useState(true)
 
     const getBitcoinData = async () => {
         //From Coinbase
@@ -96,7 +97,7 @@ function App() {
         getBitcoinData()
         getEthereumData()
 
-      }, []);
+      }, [refresh]);
 
 
     return (
@@ -104,8 +105,8 @@ function App() {
             <header className="App-header">
                 <CoinCard coinName="Bitcoin" exchanges={exchanges} coinPrices={bitcoinPrices}></CoinCard>
                 <CoinCard coinName="Ethereum" exchanges={exchanges}  coinPrices={ethereumPrices}></CoinCard>
+                <button onClick={() => setRefresh(!refresh)}>Refresh</button>
             </header>
-            <button>Refresh</button>
         </div>
     );
 }
