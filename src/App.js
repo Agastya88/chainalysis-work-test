@@ -1,6 +1,6 @@
 import CoinCard from './components/CoinCard';
 import './App.css';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 function App() {
     const exchanges = ["Coinbase", "Blockchain.com"]
@@ -43,9 +43,9 @@ function App() {
         const sellPriceBC = responseObject[26]["price_24h"]
 
         newBitcoinPrices[1] = [buyPriceBC, sellPriceBC]
+
         setBitcoinPrices(newBitcoinPrices)
     };
-    getBitcoinData();
 
     const getEthereumData = async () => {
         //From Coinbase
@@ -87,16 +87,25 @@ function App() {
         const sellPriceBC = responseObject[17]["price_24h"]
 
         newEthereumPrices[1] = [buyPriceBC, sellPriceBC]
+        
         setEthereumPrices(newEthereumPrices)
     };
-    getEthereumData();
+
+    useEffect(() => {
+
+        getBitcoinData()
+        getEthereumData()
+
+      }, []);
+
 
     return (
         <div className="App">
             <header className="App-header">
-                <CoinCard coinName="Bitcoin" exchanges={exchanges} coinType={0} coinPrices={bitcoinPrices}></CoinCard>
-                <CoinCard coinName="Ethereum" exchanges={exchanges} coinType={1} coinPrices={ethereumPrices}></CoinCard>
+                <CoinCard coinName="Bitcoin" exchanges={exchanges} coinPrices={bitcoinPrices}></CoinCard>
+                <CoinCard coinName="Ethereum" exchanges={exchanges}  coinPrices={ethereumPrices}></CoinCard>
             </header>
+            <button>Refresh</button>
         </div>
     );
 }

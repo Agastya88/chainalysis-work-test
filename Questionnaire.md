@@ -1,0 +1,21 @@
+1) Are there any sub-optimal choices( or short cuts taken due to limited time ) in your implementation?
+- I could not find how to hit the buy/sell prices for blockchain.com - I'm not sure their API supports that aspect of market data.
+- In general, I do think that the way I structured this problem is not ideal. I should have probably had a better map of how I was going to deal with the transfer of the exchanges over to the coin card in the most optimal way. My current solution is functional, and I do think that it would be possible to scale it to a larger amount of exchanges/coins, but I don't think it would be super pleasant. 
+- Just to elaborate on the writing of a more easily scalable solution, here are some things I would do. I could have done them now, but I am right in the middle of midterm season, so I do apologize for the slight laziness. 
+i) the getBitcoinData and getEthereumData functions should have been written as one function call getDataForCoin that took parameters for the buy and sell API urls; this would just make the code cleaner, especially if we were to add more coins. 
+ii) if we were to add both more coins and more exchanges, we could probably create a list of the buy, sell URLs that we want to hit and iterate through them - rather than doing them one by one as I have for coinbase and blockchain. 
+
+2) Is any part of it over-designed? ( It is fine to over-design to showcase your skills as long as you are clear about it)
+- Not really. I would say the solution is pretty basic and to the point.
+
+3) If you have to scale your solution to 100 users/second traffic what changes would you make, if any?
+- I have already commented on the scaling of the solution from a data point of view. I don't see why the number of users increasing to 100 would affect how such a solution scales since it's basically a webpage with a bunch of information. 
+
+4) What are some other enhancements you would have made, if you had more time to do this implementation
+- I wasn't sure if "it should talk to its own backend to fetch the prices. And that backend fetches prices from other exchanges/service providers" meant that I would need to setup my own API using their data and then fetch from their. I'm not completely sure how to do that, I imagine it could be done by using Next.js to setup API routes and putting the info from their APIs onto that and then hitting my API, but I am not 100% sure what that process would look like.
+-  storing the prices of bitcoin and ethereum as done in line 6,7 of App.js is probably a pretty bad implementation - a better solution would allow for easier scalability and in general be more readable. One way to do this is perhaps store the prices in a hashmap. That is the bitcoin price state for each exchange would be mapped to "Coinbase" "Blockchain.com" etc. rather than to 0, 1, 2, 3 indices as it is now - this is only easy to do/understand because of the smallness of the problem. Whereas, in the case of a hashmap, we could accomplish the same thing without hard coding an initial state i.e. when adding data from a particular exchange we could map it to that exchanges key (the name). For eg, bitcoin prices in the above problem would be something like prices = {Coinbase: (63000, 58000), Blockchain.com (x,y)}; and on our first initial fetch for some new exchange, we would just add prices["newexchange"] to our map.
+- I don't love the refresh button idea, but it was the easiest way to avoid either not having the prices refresh at all or having a rerendering infinite loop. A better solution would probably incorporate a timer feature for making calls to the API every minute or something.
+- The design is as basic as it gets - improvement of the UI/design would be nice. Especially on a larger data set, being able to filter by currency and other such things could be cool.
+- Better abstraction/making some of the things in the code more readable (I talked about this above)
+
+Thank you for taking the time to read this. Have a great day!

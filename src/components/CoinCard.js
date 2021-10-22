@@ -1,5 +1,4 @@
-export default function CoinCard({coinType, exchanges, coinPrices}) {
-    const coinName = exchanges[coinType]    
+export default function CoinCard({coinName, exchanges, coinPrices}) {
     const exchangeList = exchanges.map((item, index) => (<li key={item}> {item}: Buy - {coinPrices[index][0]} | Sell - {coinPrices[index][1]}  </li>));
     //finding the lowest buy amt
     //finding the highest sell amt
